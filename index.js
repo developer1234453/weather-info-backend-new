@@ -1,10 +1,12 @@
 const express = require('express');
 const axios = require('axios');
 require('dotenv').config();
+const cors = require('cors'); 
 
 const app = express();
 const port = 3000;
 
+app.use(cors()); // Enable CORS
 app.use(express.static('public'));
 
 app.get('/weather', async (req, res) => {
@@ -15,11 +17,11 @@ app.get('/weather', async (req, res) => {
   }
 
   try {
-    const apiKey = process.env.WEATHERSTACK_API_KEY;
+    const apiKey = process.env.WEATHERSTACK_API_KEY; // Ensure this key is correctly set in your .env file
     const response = await axios.get('https://api.weatherbit.io/v2.0/current', {
       params: {
         city: city,
-        key: apiKey,
+        key: apiKey, // API key parameter
         units: 'M', // Metric units (Celsius)
       },
     });
